@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
-import {NavBar, Nav, Icon} from '../components';
+import { NavBar, Icon } from 'antd-mobile';
 import {Link} from 'react-router';
 import Axios from 'axios';
 import * as actionCreators from '../actions/actions';
@@ -73,13 +73,14 @@ class App extends Component{
 
       return(
           <div>
-              <NavBar name={this.getNavBarText()}
-                leftContent={[navBarLeftNode]}
-                rightContent={[navBarRightNode]} />
-              <Nav data={this.state.nav}
-                active={this.state.navActive}
-                setNavActive={this.toggleNav} />
-              {React.cloneElement(this.props.children, this.props)}
+            <NavBar leftContent="search"
+            mode="light"
+            onLeftClick={() => console.log('onLeftClick')}
+            rightContent={[
+              <Icon key="0" type="search" style={{ marginRight: '0.32rem' }} />,
+              <Icon key="1" type="ellipsis" />,
+            ]}>{this.getNavBarText()}</NavBar>
+            {React.cloneElement(this.props.children, this.props)}
           </div>
         )
     }

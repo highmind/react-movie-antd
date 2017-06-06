@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Rem from '../libs/js/rem';  //处理rem的js
 import { Router, hashHistory} from 'react-router';
 import Routes from './routes';  //引入自定义路由
 import {Provider} from 'react-redux';

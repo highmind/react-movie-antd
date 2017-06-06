@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Card, Slider, Loading, Button} from '../../components';
+// import {Card, Slider, Loading, Button} from '../../components';
 import {Link} from 'react-router';
 import Axios from 'axios';
 import './index.css';
@@ -158,18 +158,7 @@ class Home extends Component{
     render(){
         return(
             <div className="main-con">
-                <Loading active={this.state.loading} />
-                <div className={this.state.loading ? "con-hide" : "con-show"}>
-                    <Slider id={this.state.sliderId} data={this.state.slider} />
-                    {this.getFilmList(this.state.playingData)}
-                    <Link to="/filmlist/playing">
-                      <Button type="ghost" clsName="home-more">更多热映电影</Button>
-                    </Link>
-                    {this.getCommingFilmList(this.state.comingData)}
-                    <Link to="/filmlist/coming">
-                      <Button type="ghost" clsName="home-more">更多即将上映电影</Button>
-                    </Link>
-                </div>
+            
             </div>
         )
     }

@@ -1,7 +1,14 @@
 // 开发环境webpack配置
 // 目的： 1 分离出 css文件 2 分离出公共js库文件  3 分离出业务逻辑js文件 4 反向代理到线上真实接口
 const webpack = require("webpack");
-
+const path = require('path');
+const autoprefixer = require('autoprefixer');
+const pxtorem = require('postcss-pxtorem');
+console.log(require.resolve('antd-mobile').replace(/warn\.js$/, ''))
+const svgDirs = [
+  require.resolve('antd-mobile').replace(/warn\.js$/, ''),  // 1. 属于 antd-mobile 内置 svg 文件
+  // path.resolve(__dirname, '/icon/'),  // 2. 自己私人的 svg 存放目录
+];
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -31,7 +38,7 @@ module.exports =  {
 
   resolve:{
     //  配置格式，用于antd-mobile
-     extensions: [ '.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json'],
+     extensions: [ '.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
   },
 
   module: {
@@ -41,7 +48,7 @@ module.exports =  {
           {
               test: /\.js$/,
               exclude: /node_modules/,
-              loader: 'babel-loader'
+              use: 'babel-loader'
           },
         // 2 css
         {
@@ -62,7 +69,40 @@ module.exports =  {
         {
           test: /\.(ttf|woff|svg|eot)$/,
           loader: "file-loader?name=/fonts/[hash:8].[name].[ext]"
-        }
+        },
+        // 5 svg
+        {
+          test: /\.(svg)$/i,
+          loader: 'svg-sprite',
+          include: '/icon'  // 把 svgDirs 路径下的所有 svg 文件交给 svg-sprite-loader 插件处理
+
+        },
+
+        {
+         test: /\.less$/,
+         use: [
+           'style-loader',
+           'css-loader',
+           {
+             loader: 'postcss-loader',
+             options: {
+               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+               plugins: () => [
+                 autoprefixer({
+                   browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
+                 }),
+                 pxtorem({ rootValue: 100, propWhiteList: [] })
+               ],
+             },
+           },
+           {
+             loader: 'less-loader',
+             options: {
+               modifyVars: { "@primary-color": "#1DA57A" },
+             },
+           },
+         ],
+       }
 
 
     ],
