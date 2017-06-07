@@ -13,3 +13,16 @@ html, body {
 .con-show{display: block;}
 .home-more{font-size:0.6rem;height:1.6rem;line-height:1.6rem;
   display: block;margin:1rem auto;width:40%;color: #616161;border-radius:14px;border: 1px solid #aaa;}
+/*左侧隐藏菜单样式*/
+  .my-drawer {
+    position: relative;
+    overflow: auto;
+  }
+  .my-drawer .am-drawer-sidebar {
+    background-color: #fff;
+    overflow: auto;
+  }
+  .my-drawer .am-drawer-sidebar .am-list {
+    width: 6rem;
+    padding: 0;
+  }

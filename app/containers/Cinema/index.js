@@ -31,9 +31,7 @@ class Cinema extends Component{
         return(
 
             <div className="main-con">
-                <Loading active={this.state.loading} />
-                <div className={this.state.loading ? "con-hide" : "con-show"}>
-                </div>
+              Cinema
             </div>
         )
     }

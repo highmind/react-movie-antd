@@ -106,7 +106,9 @@ class FilmList extends Component{
 
       return (
 
-        <div></div>
+        <div>
+          FilmList
+        </div>
       );
 
     }

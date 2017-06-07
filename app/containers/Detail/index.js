@@ -56,38 +56,7 @@ class Detail extends Component{
         const detailHeadstyle = {backgroundImage: `url(${data.origin})`};
         return(
             <div className="detail-wrap">
-                <Loading active={this.state.loading} />
-                <div className={this.state.loading ? "con-hide" : "con-show"}>
-                    <div className="detail-con">
-
-                        <div className="detail-head">
-                          <div className="img-filter" style={detailHeadstyle}></div>
-                          <div className="detail-h-l">
-                            <img width="100%" src={data.origin} alt=""/>
-                          </div>
-                          <div className="detail-h-r">
-                            <p className="detail-title">{data.name}</p>
-                            <p>{data.intro}</p>
-                            <p className="detail-score">{data.grade}分</p>
-                            <p>{data.category}</p>
-                            <p>{data.nation}/{data.mins}分钟</p>
-                          </div>
-                        </div>
-                        <div className="pay-btn-wrap">
-                          <Button clsName="pay-btn">
-                            立即购票
-                          </Button>
-                        </div>
-                        <div className="detail-main">
-                          <p>
-                            <span>演职人员</span>
-                            {this.getActor(this.state.actor)}
-                          </p>
-                          <p>{data.synopsis}</p>
-                        </div>
-
-                    </div>
-                </div>
+                Detail
             </div>
 
         )

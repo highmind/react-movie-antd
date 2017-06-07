@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
-import { NavBar, Icon } from 'antd-mobile';
+import { NavBar, Icon, Drawer, List } from 'antd-mobile';
 import {Link} from 'react-router';
 import Axios from 'axios';
 import * as actionCreators from '../actions/actions';
@@ -9,22 +9,19 @@ import {connect} from 'react-redux';
 class App extends Component{
     constructor(props){
         super(props);
-        console.log('-------App--------')
-        console.log('主容器App执行getInitialState')
         this.state = {
-            navActive:false,
+            open: false,
+            position: 'left',
             nav:[],        //导航数据
             data:[]
         }
-        this.toggleNav = this.toggleNav.bind(this);
+
         this.getNavBarText = this.getNavBarText.bind(this);
     }
 
-    // NavBar按钮点击，切换Nav的显示和隐藏，且用于与Nav组件通信
-    toggleNav(){
-      this.setState({
-        navActive : !this.state.navActive
-      })
+    onOpenChange = (...args) => {
+      console.log(args);
+      this.setState({ open: !this.state.open });
     }
 
     componentDidMount(){
@@ -46,29 +43,51 @@ class App extends Component{
     }
 
     getNavBarText(){
-      // let textArr = this.props.navBarText;
-      // let len = textArr.length;
-      // if(len != 0){
-      //   return textArr[len - 1].text;
-      // }else{
-      //   return "芝麻电影"
-      // }
       return this.props.navBarText;
     }
 
     render(){
+      const sidebar = (<List>
+      {this.state.nav.map((i, index) => {
+        return (
+          <List.Item key={index}  align="middle" onClick={this.onOpenChange}
+           arrow="horizontal">
+            <Link to={i.link}>{i.name}</Link>
+          </List.Item>);
+      })}
+    </List>);
+
+        const drawerProps = {
+        open: this.state.open,
+        position: this.state.position,
+        onOpenChange: this.onOpenChange,
+      };
 
       return(
           <div>
-        
-            <NavBar leftContent="search"
-            mode="light"
-            onLeftClick={() => console.log('onLeftClick')}
+            <NavBar leftContent=""
+            mode="dark"
+            iconName={require("../../icon/menu.svg")}
+            onLeftClick={this.onOpenChange}
             rightContent={[
               <Icon key="0" type="search" style={{ marginRight: '0.32rem' }} />,
-              <Icon key="1" type="ellipsis" />,
-            ]}>{this.getNavBarText()}</NavBar>
-            {React.cloneElement(this.props.children, this.props)}
+              <Icon key="1" type={require("../../icon/user.svg")} />,
+            ]}>
+            {this.getNavBarText()}
+           </NavBar>
+
+            <Drawer
+             className="my-drawer"
+             style={{ minHeight: document.documentElement.clientHeight - 200 }}
+             dragHandleStyle={{ display: 'none' }}
+             contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
+             sidebar={sidebar}
+             {...drawerProps}
+           >
+           {React.cloneElement(this.props.children, this.props)}
+         </Drawer>
+
+
           </div>
         )
     }

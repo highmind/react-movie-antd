@@ -38,13 +38,7 @@ class User extends Component{
     render(){
         return(
             <div className="main-con">
-                <form>
-                  <input ref="username" className="user-input user-name" placeholder="用户名" type="text"/>
-                  <input ref="password" className="user-input user-pwd" placeholder="密码" type="password"/>
-                  <Button type="warning" clsName="login-btn" clickEvent={this.handleSubmit.bind(this)}>
-                      登录
-                  </Button>
-                </form>
+                User
             </div>
         )
     }
