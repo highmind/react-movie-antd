@@ -117,6 +117,7 @@ module.exports =  {
     inline: true,
     quiet: true,
     port: 8080,
+    disableHostCheck: true, //解决Invalid Host header问题
     proxy: {  //反向代理，将ajax请求数据，转发，完整接口url为http://api.chinaplat.com/getval_2017
        '/api': {
        target: 'https://api.douban.com/v2',

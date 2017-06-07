@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-// import {Card, Slider, Loading, Button} from '../../components';
 import {Link, hashHistory} from 'react-router';
-import {Carousel, Card, WhiteSpace, Button} from 'antd-mobile';
+import {Carousel, Card, WhiteSpace, Button, Toast} from 'antd-mobile';
 import Axios from 'axios';
 import './index.css';
 
@@ -14,7 +13,6 @@ class Home extends Component{
           initialHeight: 200,
           playingData : [],   //正在上映数据
           comingData : [],   //即将上映数据
-
           loading : true   //loading参数
         }
     }
@@ -22,18 +20,18 @@ class Home extends Component{
     getData(){
         //数据返回之前，重新设置state,因为不同路由使用的一个组件，
         // 切换时，需要重置状态
-        this.setState({
-          loading : true   //loading参数
-        })
-
+        // this.setState({
+        //   loading : true   //loading参数
+        // })
+        Toast.loading('加载中...',0,()=>{},true);
         //测试webpack反向代理，
-        Axios.get('api/movie/in_theaters')
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (response) {
-          console.log(response);
-        });
+        // Axios.get('api/movie/in_theaters')
+        // .then(function (response) {
+        //   console.log(response.data);
+        // })
+        // .catch(function (response) {
+        //   console.log(response);
+        // });
 
 
         let self = this;
@@ -42,7 +40,7 @@ class Home extends Component{
             console.log('--------Containers/Home--------');
             let data = res.data;
             if(!self.ignoreLastFetch){
-              console.log(data.slider.data)
+                Toast.hide();
                 self.setState({
                     playingData : data.playingData,
                     comingData : data.comingData,
@@ -70,7 +68,6 @@ class Home extends Component{
     getFilmList(data){
       let nodes = data.map(function(dData){
         return(
-
           <Link key={dData.id} to={`/film/${dData.id}`}>
             <WhiteSpace size="xl" />
             <Card key={dData.id}>
@@ -96,7 +93,6 @@ class Home extends Component{
         const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
         return(
             <div className="main-con">
-
               <Carousel
                 className="my-carousel"
                 autoplay={true}

@@ -1,5 +1,15 @@
 
 .filmlist-active{border-bottom:4px solid #d43d3d;color:#d43d3d;}
-.filmlist-type-link{font-size:0.9rem;}
-.filmlist-head{width:94%;margin:0 auto;margin-top:10px;display: -webkit-flex;display: flex;border-bottom:1px solid #d43d3d;}
-.filmlist-type-link{flex:1;-webkit-flex:1;text-align: center;padding:0.5rem;}
+.filmlist-type-link{font-size:32px;}
+.filmlist-type-link{display:block;text-align: center;padding:0.1rem;}
+.filmlist-time-bar{color:#999;font-size:0.2rem;}
+
+.filmlist-news-img{-webkit-flex:1;}
+.filmlist-news-con{-webkit-flex:3;padding:0 10px;}
+.filmlist-news-right{-webkit-flex:1;}
+.filmlist-news-con h4{font-weight: normal;font-size:32px;}
+.filmlist-time-bar{color:#999;font-size:26px;margin-top:10px;}
+.filmlist-news-wrap2{width:96%;margin:0 auto;border-bottom:1px solid #f6f6f6; padding:10px 0;}
+.filmlist-news-con2 h4{font-weight: normal;font-size:0.2rem;}
+.filmlist-news-img2 .img-wrap{display:block;width:100%;margin-top:6px;}
+.filmlist-news-img2 img{width:33.3%;}

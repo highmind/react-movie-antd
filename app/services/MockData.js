@@ -1,5 +1,6 @@
 import Mock from 'mockjs';
-let ip = 'localhost:8080';
+let ip = '192.168.0.115:8080';
+// let ip = 'localhost:8080';
 // 详情页mock数据
 Mock.mock('http://mockdata/detail', 'get', {
     "film": {
@@ -276,10 +277,10 @@ Mock.mock('http://mockdata/playing?page=0&count=7', 'get', {
 })
 
 //coming电影数据
-Mock.mock('http://mockdata/coming?page=0&count=4', 'get', {
+Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
     "data" : [
       {
-        "id": 3555,
+        "id": "@id",
         "name": "游戏规则",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img1.jpg"
@@ -291,7 +292,7 @@ Mock.mock('http://mockdata/coming?page=0&count=4', 'get', {
         "showTime":"12月31日"
       },
       {
-        "id": 3556,
+        "id": "@id",
         "name": "大脚印",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img2.jpg"
@@ -303,7 +304,7 @@ Mock.mock('http://mockdata/coming?page=0&count=4', 'get', {
         "showTime":"1月21日"
       },
       {
-        "id": 3557,
+        "id": "@id",
         "name": "极限特工",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img3.jpg"
@@ -315,7 +316,7 @@ Mock.mock('http://mockdata/coming?page=0&count=4', 'get', {
         "showTime":"1月21日"
       },
       {
-        "id": 3558,
+        "id": "@id",
         "name": "疯狂俏娇人",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img4.jpg"
@@ -327,7 +328,7 @@ Mock.mock('http://mockdata/coming?page=0&count=4', 'get', {
         "showTime":"1月21日"
       },
       {
-        "id": 3559,
+        "id": "@id",
         "name": "萤火奇兵",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img5.jpg"
@@ -339,7 +340,7 @@ Mock.mock('http://mockdata/coming?page=0&count=4', 'get', {
         "showTime":"1月21日"
       },
       {
-        "id": 3560,
+        "id": "@id",
         "name": "决战食神",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img6.jpg"
@@ -351,7 +352,7 @@ Mock.mock('http://mockdata/coming?page=0&count=4', 'get', {
         "showTime":"1月21日"
       },
       {
-        "id": 3561,
+        "id": "@id",
         "name": "刺客信条",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img7.jpg"

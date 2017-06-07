@@ -20,13 +20,10 @@ class App extends Component{
     }
 
     onOpenChange = (...args) => {
-      console.log(args);
       this.setState({ open: !this.state.open });
     }
 
     componentDidMount(){
-        console.log('-------App--------')
-        console.log('主容器App执行componentDidMount')
         // 初始化导航数据
         let url = 'http://mockdata/nav';
         let self = this;
@@ -57,7 +54,7 @@ class App extends Component{
       })}
     </List>);
 
-        const drawerProps = {
+     const drawerProps = {
         open: this.state.open,
         position: this.state.position,
         onOpenChange: this.onOpenChange,
@@ -81,17 +78,15 @@ class App extends Component{
             {this.getNavBarText()}
            </NavBar>
 
-            <Drawer
+          <Drawer
              className="my-drawer"
-             style={{ minHeight: document.documentElement.clientHeight - 200 }}
+             style={{ minHeight: document.documentElement.clientHeight }}
              dragHandleStyle={{ display: 'none' }}
              contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 0 }}
              sidebar={sidebar}
-             {...drawerProps}
-           >
+             {...drawerProps}>
            {React.cloneElement(this.props.children, this.props)}
-         </Drawer>
-
+          </Drawer>
 
           </div>
         )
