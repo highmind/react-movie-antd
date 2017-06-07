@@ -57,22 +57,10 @@ class App extends Component{
     }
 
     render(){
-      // NavBar左侧子组件
-      let navBarLeftNode = [
-        <span className="left-btn"  onClick={this.toggleNav}>
-          <Icon key="2" type="icon-caidan01" />
-        </span>
-      ];
-      // NavBar右侧子组件
-      let navBarRightNode = [
-        <Link className="right-btn-1" to="/user/">
-          <Icon key="0" type="icon-user" />
-        </Link>,
-        <a className="right-btn-2" href="#"><span className="city">秦皇岛</span><Icon key="1" type="icon-xiangxiajiantou" /></a>
-      ];
 
       return(
           <div>
+        
             <NavBar leftContent="search"
             mode="light"
             onLeftClick={() => console.log('onLeftClick')}
