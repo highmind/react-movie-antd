@@ -52,8 +52,8 @@ Mock.mock('http://mockdata/nav', 'get', {
             "id": 1
         },
         {
-            "link": "/cinema",
-            "name": "影院",
+            "link": "/search",
+            "name": "搜索",
             "id": 2
         },
         {

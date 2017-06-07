@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import {List, NavBar, Nav, Slider, Loading, Icon} from '../../components';
-import Axios from 'axios'; //引入axios处理ajax
+// import {List, NavBar, Nav, Slider, Loading, Icon} from '../../components';
+import Axios from 'axios';
 import './index.css';
 //首页页面
-class Cinema extends Component{
+class Search extends Component{
     constructor(props){
         super(props);
         this.state = {
         }
-        this.props.actions.navBarSet("全部影院")
+        this.props.actions.navBarSet("搜索电影")
     }
 
 
@@ -31,7 +31,7 @@ class Cinema extends Component{
         return(
 
             <div className="main-con">
-              Cinema
+              Search
             </div>
         )
     }
@@ -39,4 +39,4 @@ class Cinema extends Component{
 }
 
 
-export default  Cinema
+export default  Search

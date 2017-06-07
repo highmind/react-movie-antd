@@ -70,8 +70,13 @@ class App extends Component{
             iconName={require("../../icon/menu.svg")}
             onLeftClick={this.onOpenChange}
             rightContent={[
-              <Icon key="0" type="search" style={{ marginRight: '0.32rem' }} />,
-              <Icon key="1" type={require("../../icon/user.svg")} />,
+              <Link key="0" to="/search" style={{ marginRight: '0.32rem' }}>
+                <Icon key="0" color="#fff" type="search" />
+              </Link>,
+              <Link key="1" to="/user">
+                <Icon key="1" color="#fff" type={require("../../icon/user.svg")} />
+              </Link>
+
             ]}>
             {this.getNavBarText()}
            </NavBar>
@@ -80,7 +85,7 @@ class App extends Component{
              className="my-drawer"
              style={{ minHeight: document.documentElement.clientHeight - 200 }}
              dragHandleStyle={{ display: 'none' }}
-             contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
+             contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 0 }}
              sidebar={sidebar}
              {...drawerProps}
            >

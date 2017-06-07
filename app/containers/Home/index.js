@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 // import {Card, Slider, Loading, Button} from '../../components';
-import {Link} from 'react-router';
+import {Link, hashHistory} from 'react-router';
+import {Carousel, Card, WhiteSpace, Button} from 'antd-mobile';
 import Axios from 'axios';
 import './index.css';
 
@@ -9,10 +10,11 @@ class Home extends Component{
         super(props);
         this.ignoreLastFetch = false;
         this.state = {
+          data: ['', '', ''],
+          initialHeight: 200,
           playingData : [],   //正在上映数据
           comingData : [],   //即将上映数据
-          slider : [],     //轮播图数据
-          sliderId : 0,    //轮播图组件id
+
           loading : true   //loading参数
         }
     }
@@ -40,109 +42,44 @@ class Home extends Component{
             console.log('--------Containers/Home--------');
             let data = res.data;
             if(!self.ignoreLastFetch){
+              console.log(data.slider.data)
                 self.setState({
                     playingData : data.playingData,
                     comingData : data.comingData,
-                    slider : data.slider.data,
-                    sliderId : data.slider.id,
+                    data : data.slider.data,
                     loading : false
                 })
             }
 
-            // 设置滚动条位置
-            self.setPosition();
         })
 
     }
 
-    savePosition() {
-        console.log('...savePosition...');
-        let scrollTop = document.body.scrollTop;//获取滚动条高度
-        let path = this.props.location.pathname;//获取当前的pathname
-        let positionData = {"scrollTop" : scrollTop, "path" : this.props.location.pathname};//redux中要存储的数据
-        this.props.actions.setScroll(positionData);//通过action设置位置信息
-    }
 
-    // 设置滚动条位置
-    setPosition(){
-        console.log('...setPosition...');
-        console.log(this.props.position);
-        let posData = this.props.position;//获取store中的滚动条位置信息
-        let len = posData.length;         //获取信息数组长度，用于获取最新的位置信息
-        // let savePos = 0;                  //初始位置为0
-        // let savePath = '';                //初始pathname为空
-        // if(len != 0 ){                    //当位置信息数组不为空的时候，设置位置和pathname
-        let  savePos = posData[len - 1].position.scrollTop;
-        let  savePath = posData[len - 1].position.path;
-        console.log(savePos);
-        console.log(savePath)
-        // }
-
-        let path = this.props.location.pathname; //获取当前pathname
-        if(path == savePath){                    //当store中路径和当前路径一致时，
-             window.scrollTo(0, savePos);           //设置滚动条位置到 相应位置
-             let positionData = {"scrollTop" : 0, "path" : this.props.location.pathname};
-             //this.props.setScroll(positionData);    //设置store中当前path为0，解决导航栏目切换时，滚动条位置
-         }
-        else{    //否则滚动到顶部
-           window.scrollTo(0, 0);
-        }
-
-    }
 
     componentDidMount(){
         this.props.actions.navBarSet("芝麻电影");
-        console.log('--------Containers/Home---componentDidMount--------');
         this.getData();
     }
 
     componentWillUnmount () {
         // 上面步骤四，在组件移除前忽略正在进行中的请求
         this.ignoreLastFetch = true
-        this.savePosition()
     }
 
     getFilmList(data){
       let nodes = data.map(function(dData){
-        let cardFLNode = <div>
-          <h4 className="card-title">{dData.name}</h4>
-          <p className="card-text">
-            {dData.cinemaCount}家影院上映 {dData.watchCount}人购票
-          </p>
-        </div>;
-        let cardFRNode = <span className="card-score">{dData.grade}</span>;
         return(
+
           <Link key={dData.id} to={`/film/${dData.id}`}>
-            <Card
-              key={dData.id}
-              data={dData}
-              cardFooterLeft={cardFLNode}
-              cardFooterRight={cardFRNode}
-            />
-          </Link>
-        )
-      })
-
-      return (
-        <div className="film-list">
-          {nodes}
-        </div>
-      )
-
-    }
-
-    getCommingFilmList(data){
-      let nodes = data.map(function(dData){
-        let cardFLNode = <h4 className="card-title2">{dData.name}</h4>;
-        let cardFRNode = <span className="card-time">{dData.showTime}上映</span>;
-        return(
-          <Link key={dData.id} to={`/film/${dData.id}`}>
-            <Card
-              key={dData.id}
-              data={dData}
-              cardFooterLeft={cardFLNode}
-              cardFooterRight={cardFRNode}
-            />
+            <WhiteSpace size="xl" />
+            <Card key={dData.id}>
+              <Card.Header title={dData.name} />
+              <Card.Body>
+                <img width="100%" src={dData.cover.origin} alt=""/>
+              </Card.Body>
+              <Card.Footer content={dData.intro} extra={dData.grade} />
+            </Card>
           </Link>
         )
       })
@@ -156,9 +93,47 @@ class Home extends Component{
     }
 
     render(){
+        const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
         return(
             <div className="main-con">
-              Home
+
+              <Carousel
+                className="my-carousel"
+                autoplay={true}
+                infinite
+                selectedIndex={1}
+                swipeSpeed={35}
+              >
+                {this.state.data.map((dd, ii) => (
+                  <Link to={dd.url} key={ii} style={hProp}>
+                    <img src={dd.imgUrl}
+                      alt="" onLoad={() => {
+                        // fire window resize event to change height
+                        window.dispatchEvent(new Event('resize'));
+                        this.setState({
+                          initialHeight: null,
+                        });
+                      }}
+                    />
+                 </Link>
+                ))}
+              </Carousel>
+
+              {this.getFilmList(this.state.playingData)}
+              <WhiteSpace size="lg" />
+              <Button type="ghost" inline size="small"
+                onClick={() =>{hashHistory.push('/filmlist/playing')}}>
+                更多热映电影
+              </Button>
+
+
+              {this.getFilmList(this.state.comingData)}
+              <WhiteSpace size="lg" />
+                <Button type="ghost" inline size="small"
+                   onClick={() =>{hashHistory.push('/filmlist/comming')}}>
+                  更多即将上映电影
+                </Button>
+
             </div>
         )
     }
