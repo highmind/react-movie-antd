@@ -1,6 +1,7 @@
 import Mock from 'mockjs';
-let ip = '192.168.0.115:8080';
+// let ip = '192.168.0.115:8080';
 // let ip = 'localhost:8080';
+let ip = 'croooo.com/code-test/test/movie-antd';
 // 详情页mock数据
 Mock.mock('http://mockdata/detail', 'get', {
     "film": {
@@ -281,7 +282,7 @@ Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
     "data" : [
       {
         "id": "@id",
-        "name": "游戏规则",
+        "name": "游戏规则-@cword",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img1.jpg"
         },
@@ -293,7 +294,7 @@ Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
       },
       {
         "id": "@id",
-        "name": "大脚印",
+        "name": "大脚印-@cword",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img2.jpg"
         },
@@ -305,7 +306,7 @@ Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
       },
       {
         "id": "@id",
-        "name": "极限特工",
+        "name": "极限特工-@cword",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img3.jpg"
         },
@@ -317,7 +318,7 @@ Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
       },
       {
         "id": "@id",
-        "name": "疯狂俏娇人",
+        "name": "疯狂俏娇人-@cword",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img4.jpg"
         },
@@ -329,7 +330,7 @@ Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
       },
       {
         "id": "@id",
-        "name": "萤火奇兵",
+        "name": "萤火奇兵-@cword",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img5.jpg"
         },
@@ -341,7 +342,7 @@ Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
       },
       {
         "id": "@id",
-        "name": "决战食神",
+        "name": "决战食神-@cword",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img6.jpg"
         },
@@ -353,7 +354,7 @@ Mock.mock('http://mockdata/coming?page=0&count=7', 'get', {
       },
       {
         "id": "@id",
-        "name": "刺客信条",
+        "name": "刺客信条-@cword",
         "cover": {
             "origin": "http://"+ ip +"/images/c-cover-img7.jpg"
         },
@@ -476,5 +477,5 @@ Mock.mock('http://mockdata/coming?page=2&count=4', 'get', {
 
 // 设置数据延迟时间，模拟loading
 Mock.setup({
-    timeout: '500'
+    timeout: '400'
 })

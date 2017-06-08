@@ -26,3 +26,4 @@ html, body {
     width: 6rem;
     padding: 0;
   }
+.app-nav-link{display: block;}

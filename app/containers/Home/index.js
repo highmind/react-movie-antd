@@ -126,7 +126,7 @@ class Home extends Component{
               {this.getFilmList(this.state.comingData)}
               <WhiteSpace size="lg" />
                 <Button type="ghost" inline size="small"
-                   onClick={() =>{hashHistory.push('/filmlist/comming')}}>
+                   onClick={() =>{hashHistory.push('/filmlist/coming')}}>
                   更多即将上映电影
                 </Button>
 

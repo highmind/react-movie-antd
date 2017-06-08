@@ -49,7 +49,7 @@ class App extends Component{
         return (
           <List.Item key={index}  align="middle" onClick={this.onOpenChange}
            arrow="horizontal">
-            <Link to={i.link}>{i.name}</Link>
+            <Link className="app-nav-link" to={i.link}>{i.name}</Link>
           </List.Item>);
       })}
     </List>);
@@ -80,12 +80,12 @@ class App extends Component{
 
           <Drawer
              className="my-drawer"
-             style={{ minHeight: document.documentElement.clientHeight }}
+             style={{ minHeight: document.documentElement.clientHeight - 80 }}
              dragHandleStyle={{ display: 'none' }}
-             contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 0 }}
+             contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 0}}
              sidebar={sidebar}
              {...drawerProps}>
-           {React.cloneElement(this.props.children, this.props)}
+             {React.cloneElement(this.props.children, this.props)}
           </Drawer>
 
           </div>

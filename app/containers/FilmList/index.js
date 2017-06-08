@@ -25,56 +25,46 @@ class FilmList extends Component{
     getData(type, pageIndex){
         //数据返回之前，重新设置state,因为不同路由使用的一个组件，切换时，需要重置状态
         Toast.loading('加载中...',0,()=>{},true);
-        pageIndex++;
-
-        // let self = this;
+        // pageIndex++;
         let url = 'http://mockdata/' + type + '?page=0' +'&count=' + this.state.count;
         Axios.get(url).then((res) => {
-          if(!this.ignoreLastFetch){
               Toast.hide();
               this.rData = res.data.data;
               this.setState({
                   dataSource : this.state.dataSource.cloneWithRows(this.rData),
                   isLoading : false
               })
-          }
         })
-
-        // Axios.get(url).then(function(res){
-        //     if(!self.ignoreLastFetch){
-        //         this.rData = res.data.data;
-        //         self.setState({
-        //             dataSource : self.state.dataSource.cloneWithRows(this.rData),
-        //             isLoading : false
-        //         })
-        //     }
-        // })
-
     }
 
     componentDidMount(){
       this.props.actions.navBarSet("全部影片");
+      console.log(this.refs.lv); //切换
+      this.refs.lv.refs.listview.scrollTo(0, 0); //listview 滚动到顶部
       this.getData(this.props.params.type, 0);
     }
 
     componentDidUpdate(prevProps) {
+
         // 上面步骤3，通过参数更新数据
         let oldType = prevProps.params.type;
         let type = this.props.params.type;
         if (type !== oldType){
+           this.refs.lv.refs.listview.scrollTo(0, 0); //listview 滚动到顶部
             // 如果路由获取不到参数，获取推荐数据
             if(typeof(type) == 'undefined'){
-              this.getData('playing');
+              this.getData('playing', 0);
             }
             // 否则获取相应栏目数据，根据type查询
             else {
-              this.getData(type);
+              this.getData(type, 0);
             }
         }
     }
 
     //滑动到底部
     onEndReached = (event) => {
+      console.log(this.state.isLoading)
       //如果正在加载，返回
       if(this.state.isLoading){
         return;
@@ -83,17 +73,17 @@ class FilmList extends Component{
       Toast.loading('加载中...',0,()=>{},true);
 
       console.log('bottom');
-
+      console.log(this.props.params.type);
       let url = 'http://mockdata/' + this.props.params.type + '?page=0' +'&count=' + this.state.count;
       Axios.get(url).then((res) => {
-        if(!this.ignoreLastFetch){
             Toast.hide();
             this.rData = [...this.rData, ...res.data.data];
+            console.log(this.rData)
             this.setState({
                 dataSource : this.state.dataSource.cloneWithRows(this.rData),
                 isLoading : false
             })
-        }
+
       })
     }
 
@@ -128,7 +118,6 @@ class FilmList extends Component{
               </div>
             </Flex>
           </WingBlank>
-
 
         );
       };
@@ -170,7 +159,12 @@ class FilmList extends Component{
                     renderSeparator={separator}
                     className="am-list"
                     pageSize={7}
-                    useBodyScroll
+                    style={{
+                      height: document.documentElement.clientHeight - 400,
+                      overflow: 'auto',
+                      border: '1px solid #ddd',
+
+                    }}
                     scrollRenderAheadDistance={500}
                     scrollEventThrottle={20}
                     onScroll={() => { console.log('scroll'); }}
