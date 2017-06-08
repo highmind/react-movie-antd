@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-// let ip = '192.168.0.115:8080';
+// let ip = '192.168.0.116:8080';
 // let ip = 'localhost:8080';
 let ip = 'croooo.com/code-test/test/movie-antd';
 // 详情页mock数据

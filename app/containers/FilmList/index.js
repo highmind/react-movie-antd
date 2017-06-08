@@ -4,14 +4,14 @@ import {ListView, Flex, WingBlank, WhiteSpace, Button, Toast} from 'antd-mobile'
 import Axios from 'axios';
 import './index.css';
 
-let pageIndex = 0;
-
 class FilmList extends Component{
     constructor(props){
         super(props);
-        const dataSource = new ListView.DataSource({ //必须定了rowHasChanged
+        const dataSource = new ListView.DataSource({ //必须有rowHasChanged
           rowHasChanged:(row1, row2) => row1 !== row2,
         });
+
+        this.rData = [];
 
         this.state = {
           dataSource:dataSource.cloneWithRows({}),
@@ -21,15 +21,20 @@ class FilmList extends Component{
 
     }
 
-    // type 为通过url传的参数
-    getData(type, pageIndex){
-        //数据返回之前，重新设置state,因为不同路由使用的一个组件，切换时，需要重置状态
-        Toast.loading('加载中...',0,()=>{},true);
-        // pageIndex++;
-        let url = 'http://mockdata/' + type + '?page=0' +'&count=' + this.state.count;
+    /*
+    ** @params type 为路由参数，如：coming
+    ** @params page 为页数
+    */
+    getData(type, page){
+        this.setState({
+          isLoading : true
+        })
+        Toast.loading('加载中...',0,()=>{},true); //开始加载提示
+        let url = `http://mockdata/${type}?page=${page}&count=${this.state.count}`;
+        // page++;
         Axios.get(url).then((res) => {
               Toast.hide();
-              this.rData = res.data.data;
+              this.rData = [...this.rData, ...res.data.data];
               this.setState({
                   dataSource : this.state.dataSource.cloneWithRows(this.rData),
                   isLoading : false
@@ -39,52 +44,29 @@ class FilmList extends Component{
 
     componentDidMount(){
       this.props.actions.navBarSet("全部影片");
-      console.log(this.refs.lv); //切换
-      this.refs.lv.refs.listview.scrollTo(0, 0); //listview 滚动到顶部
+      window.scrollTo(0,0);
       this.getData(this.props.params.type, 0);
+
     }
 
     componentDidUpdate(prevProps) {
-
-        // 上面步骤3，通过参数更新数据
         let oldType = prevProps.params.type;
         let type = this.props.params.type;
         if (type !== oldType){
            this.refs.lv.refs.listview.scrollTo(0, 0); //listview 滚动到顶部
-            // 如果路由获取不到参数，获取推荐数据
-            if(typeof(type) == 'undefined'){
-              this.getData('playing', 0);
-            }
-            // 否则获取相应栏目数据，根据type查询
-            else {
-              this.getData(type, 0);
-            }
+           this.rData = []; //清空上一个的数据
+           this.getData(type, 0);
         }
     }
 
     //滑动到底部
     onEndReached = (event) => {
-      console.log(this.state.isLoading)
-      //如果正在加载，返回
-      if(this.state.isLoading){
+      if(this.state.isLoading){//如果正在加载，返回
         return;
       }
-
       Toast.loading('加载中...',0,()=>{},true);
-
-      console.log('bottom');
-      console.log(this.props.params.type);
-      let url = 'http://mockdata/' + this.props.params.type + '?page=0' +'&count=' + this.state.count;
-      Axios.get(url).then((res) => {
-            Toast.hide();
-            this.rData = [...this.rData, ...res.data.data];
-            console.log(this.rData)
-            this.setState({
-                dataSource : this.state.dataSource.cloneWithRows(this.rData),
-                isLoading : false
-            })
-
-      })
+      let type = this.props.params.type;
+      this.getData(type, 0)
     }
 
     render(){
@@ -100,19 +82,20 @@ class FilmList extends Component{
       );
 
       const row = (rowData, sectionID, rowID) => {
+        let {cover, name, intro, id} = rowData;
         return (
           <WingBlank size="lg">
             <Flex>
               <div className="filmlist-news-img">
-                  <img width="100%" src={rowData.cover.origin} alt=""/>
+                  <img width="100%" src={cover.origin} alt=""/>
               </div>
               <div className="filmlist-news-con">
-                  <h4>{rowData.name}</h4>
-                  <p className="filmlist-time-bar">{rowData.intro}</p>
+                  <h4>{name}</h4>
+                  <p className="filmlist-time-bar">{intro}</p>
               </div>
               <div className="filmlist-news-right">
                 <Button type="ghost" inline size="small"
-                   onClick={() =>{hashHistory.push(`film/${rowData.id}`)}}>
+                   onClick={() =>{hashHistory.push(`film/${id}`)}}>
                   更多
                 </Button>
               </div>
@@ -150,19 +133,16 @@ class FilmList extends Component{
                     dataSource={this.state.dataSource}
                     renderHeader={''}
                     renderFooter={() => (
-                      <div style={{paddingBottom: '20px'}}>
-                        <Button type="ghost" inline size="small">
-                          查看更多
-                        </Button>
+                      <div style={{ padding: 30, textAlign: 'center' }}>
+                        {this.state.isLoading ? '加载中...' : '查看更多'}
                       </div>)}
                     renderRow={row}
                     renderSeparator={separator}
                     className="am-list"
                     pageSize={7}
                     style={{
-                      height: document.documentElement.clientHeight - 400,
-                      overflow: 'auto',
-                      border: '1px solid #ddd',
+                      height: document.documentElement.clientHeight*4/5,
+                      overflow: 'auto'
 
                     }}
                     scrollRenderAheadDistance={500}
