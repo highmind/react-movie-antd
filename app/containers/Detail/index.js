@@ -17,17 +17,15 @@ class Detail extends Component{
     }
 
     getData(id){
-        let self = this;
         let url = 'http://mockdata/detail';
-        Axios.get(url).then(function(res){
-            let filmData = res.data.film;
-            self.setState({
-                data : filmData,
-                actor: filmData.actors,
-                loading : false
-            })
-
-            self.props.actions.navBarSet(filmData.name)
+        Axios.get(url).then((res) => {
+          let filmData = res.data.film;
+          this.setState({
+              data : filmData,
+              actor: filmData.actors,
+              loading : false
+          })
+          this.props.actions.navBarSet(filmData.name)
         })
         window.scrollTo(0, 0);
     }

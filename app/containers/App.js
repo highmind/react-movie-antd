@@ -12,10 +12,9 @@ class App extends Component{
         this.state = {
             open: false,
             position: 'left',
-            nav:[],        //导航数据
+            nav:[], //导航数据
             data:[]
         }
-
         this.getNavBarText = this.getNavBarText.bind(this);
     }
 
@@ -52,7 +51,7 @@ class App extends Component{
             <Link className="app-nav-link" to={i.link}>{i.name}</Link>
           </List.Item>);
       })}
-    </List>);
+     </List>);
 
      const drawerProps = {
         open: this.state.open,

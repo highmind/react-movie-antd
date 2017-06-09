@@ -18,28 +18,11 @@ class Home extends Component{
     }
 
     getData(){
-        //数据返回之前，重新设置state,因为不同路由使用的一个组件，
-        // 切换时，需要重置状态
-        // this.setState({
-        //   loading : true   //loading参数
-        // })
         Toast.loading('加载中...',0,()=>{},true);
-        //测试webpack反向代理，
-        // Axios.get('api/movie/in_theaters')
-        // .then(function (response) {
-        //   console.log(response.data);
-        // })
-        // .catch(function (response) {
-        //   console.log(response);
-        // });
-
-
         let self = this;
         let url = 'http://mockdata/filmlist';
         Axios.get(url).then(function(res){
-            console.log('--------Containers/Home--------');
             let data = res.data;
-            if(!self.ignoreLastFetch){
                 Toast.hide();
                 self.setState({
                     playingData : data.playingData,
@@ -47,13 +30,9 @@ class Home extends Component{
                     data : data.slider.data,
                     loading : false
                 })
-            }
-
         })
 
     }
-
-
 
     componentDidMount(){
         this.props.actions.navBarSet("芝麻电影");
@@ -61,8 +40,7 @@ class Home extends Component{
     }
 
     componentWillUnmount () {
-        // 上面步骤四，在组件移除前忽略正在进行中的请求
-        this.ignoreLastFetch = true
+
     }
 
     getFilmList(data){
@@ -71,11 +49,10 @@ class Home extends Component{
           <Link key={dData.id} to={`/film/${dData.id}`}>
             <WhiteSpace size="xl" />
             <Card key={dData.id}>
-              <Card.Header title={dData.name} />
               <Card.Body>
                 <img width="100%" src={dData.cover.origin} alt=""/>
               </Card.Body>
-              <Card.Footer content={dData.intro} extra={dData.grade} />
+              <Card.Footer content={dData.name} extra={dData.grade} />
             </Card>
           </Link>
         )
@@ -86,7 +63,6 @@ class Home extends Component{
           {nodes}
         </div>
       )
-
     }
 
     render(){
