@@ -38,9 +38,9 @@
     "svg-sprite-loader": "^0.3.1"
   },
   "scripts": {
-    "build": "rimraf dist && webpack --config webpack.config.prod.js -p",
+    "build": "rimraf dist && webpack --config webpack.config.prod.js --progress --colors -p",
     "clean": "rimraf dist",
-    "start": "webpack-dev-server --config webpack.config.dev.js  --history-api-fallback"
+    "start": "webpack-dev-server --config webpack.config.dev.js --history-api-fallback"
   },
   "repository": {
     "type": "git",
